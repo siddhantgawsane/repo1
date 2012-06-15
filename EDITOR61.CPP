@@ -30,34 +30,34 @@ void border()
 	textbackground(BLACK);
 	textcolor(WHITE);
 
-	n=201;
+	n=201;		//top left corner
 	printf("\n\n%c",n);
-	n=205;
+	n=205;          //straight line
 	for(i=0;i<78;i++)
 		printf("%c",n);
-	n=187;
+	n=187;          //top right
 	printf("%c",n);
-	n=186;
-	for(i=4;i<49;i++)
+	n=186;          //straight line
+	for(i=4;i<24;i++)
 	{
 		gotoxy(80,i);
 		printf("%c",n);
 	}
-	n=188;
+	n=188;         //botttom right
 	gotoxy(80,i);
 	printf("%c",n);
 	n=205;
 	for(i=79;i>1;i--)
 	{
-		gotoxy(i,49);
+		gotoxy(i,24);
 		printf("%c",n);
 	}
-	n=200;
-	gotoxy(i,49);
+	n=200;          //bottom left
+	gotoxy(i,24);
 	printf("%c",n);
 
 	n=186;
-	for(i=4;i<49;i++)
+	for(i=4;i<24;i++)
 	{
 		gotoxy(1,i);
 		printf("%c",n);
@@ -100,8 +100,10 @@ void restore()
 	gotoxy(2,5);
 	for(i=0;i<len;i++)
 	{
-		if(buffer[i]=='^'||wherex()==80)	gotoxy(2,(wherey()+2));//cprintf("%c",13);
-		else	cprintf("%c",buffer[i]);
+		if(buffer[i]=='^'||wherex()==80)
+			gotoxy(2,(wherey()+2));//cprintf("%c",13);
+		else
+			cprintf("%c",buffer[i]);
 	}
 }
 
@@ -134,11 +136,11 @@ void menuInput()
 		{
 			switch(ch)
 			{
-				case 13:
+				case 13:	//enter
 					buffer[len++]='^';
 					restore();
 					break;
-				case 8:
+				case 8:         //bksp
 					if(wherex()==2)
 					{
 						gotoxy(78,(wherey()-1));
@@ -225,12 +227,12 @@ void subMenuInput(int x)
 					editMenu();
 					break;
 
-				case 72:
+				case 72:		//up
 					curry=curry-2;
 					if(curry<5) curry=11;
 					gotoxy(x,curry);
 					break;
-				case 80:
+				case 80:                //down
 					curry=curry+2;
 					if(curry>11) curry=5;
 					gotoxy(x,curry);
@@ -393,7 +395,7 @@ void newFile()
 void box()
 {
 	int i;
-	gotoxy(2,16);
+	gotoxy(2,6);
 
 	cprintf("%c",201);
 
@@ -402,7 +404,7 @@ void box()
 
 	cprintf("%c",187);
 
-	for(i=17;i<38;i++)
+	for(i=7;i<18;i++)
 	{
 		gotoxy(79,i);
 		cprintf("%c",186);
@@ -413,14 +415,14 @@ void box()
 
 	for(i=78;i>2;i--)
 	{
-		gotoxy(i,38);
+		gotoxy(i,18);
 		cprintf("%c",205);
 	}
 
-	gotoxy(i,38);
+	gotoxy(i,18);
 	cprintf("%c",200);
 
-	for(i=17;i<38;i++)
+	for(i=7;i<18;i++)
 	{
 		gotoxy(2,i);
 		cprintf("%c",186);
@@ -437,13 +439,16 @@ void open()
 //	clearbuffer();
 	clrscr();
 	box();
-	gotoxy(20,20);
+	gotoxy(10,10);
 	cprintf("\nEnter the file name : ");
 	scanf("%s",fname);
 
 	fp=fopen(fname,"r+");
 	if(fp==NULL)
 	{
+		clrscr();
+		box();
+		gotoxy(10,10);
 		cprintf("\tUnable to open file!");
 		return;
 	}
@@ -474,7 +479,7 @@ void save()
 
 	clrscr();
 	box();
-	gotoxy(20,20);
+	gotoxy(10,10);
 	cprintf("\nEnter the file name : ");
 	scanf("%s",fname);
 
